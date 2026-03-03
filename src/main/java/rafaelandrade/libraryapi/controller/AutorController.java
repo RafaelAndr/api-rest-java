@@ -1,5 +1,6 @@
 package rafaelandrade.libraryapi.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class AutorController {
     private final AutorService service;
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody AutorDto autor){
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDto autor){
         try {
             Autor autorEntidade = autor.mapearParaAutor();
             service.salvar(autorEntidade);
