@@ -18,20 +18,16 @@ import rafaelandrade.libraryapi.service.LivroService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/livros")
-public class LivroController {
+public class LivroController implements GenericController {
 
     private final LivroService service;
     private final LivroMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDto dto){
-        try{
-            Livro livro = mapper.toEntity(dto);
-            service.salvar(livro);
-            return ResponseEntity.ok(livro);
-        } catch(RegistroDuplicadoExceptions e){
-            var erroDTO = ErroResposta.conflito(e.getMessage());
-            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
-        }
+    public ResponseEntity<Object> salvar(@RequestBody @Valid CadastroLivroDto dto) {
+        Livro livro = mapper.toEntity(dto);
+        service.salvar(livro);
+        var url = gerarHeaderLocation(livro.getId());
+        return ResponseEntity.created(url).build();
     }
 }

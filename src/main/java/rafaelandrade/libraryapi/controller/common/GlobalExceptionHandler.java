@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import rafaelandrade.libraryapi.controller.dto.ErroCampo;
 import rafaelandrade.libraryapi.controller.dto.ErroResposta;
+import rafaelandrade.libraryapi.exceptions.OperacaoNaoPermitidaExceptions;
+import rafaelandrade.libraryapi.exceptions.RegistroDuplicadoExceptions;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,5 +32,23 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 "Erro validação",
                 listaErros);
+    }
+
+    @ExceptionHandler(RegistroDuplicadoExceptions.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleRegistroDuplicadoException(RegistroDuplicadoExceptions e){
+        return ErroResposta.conflito(e.getMessage());
+    }
+
+    @ExceptionHandler(OperacaoNaoPermitidaExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErroResposta handleOperacaoNaoPermitidaException(OperacaoNaoPermitidaExceptions e){
+        return ErroResposta.conflito(e.getMessage());
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleErrosNaoTratados(RuntimeException e){
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ocorreu um problema no servidor" , List.of());
     }
 }

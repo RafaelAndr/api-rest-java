@@ -23,35 +23,24 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/autores")
-public class AutorController {
+public class AutorController implements GenericController {
 
     private final AutorService service;
     private final AutorMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDto dto){
-        try {
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDto dto) {
 //            Autor autorEntidade = autor.mapearParaAutor();
-            Autor autor = mapper.toEntity(dto);
-            service.salvar(autor);
+        Autor autor = mapper.toEntity(dto);
+        service.salvar(autor);
 
-            //http://localhost:8080/autores/id
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("/{id}")
-                    .buildAndExpand(autor.getId())
-                    .toUri();
-
-            return ResponseEntity.created(location).build();
-        } catch(RegistroDuplicadoExceptions e){
-            var erroDTO = ErroResposta.conflito(e.getMessage());
-            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
-        }
-
+        //http://localhost:8080/autores/id
+        URI location = gerarHeaderLocation(autor.getId());
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AutorDto> obterDetales(@PathVariable("id") String id){
+    public ResponseEntity<AutorDto> obterDetales(@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
 //      Optional<Autor> autorOptional = service.obterPorId(idAutor);
 
@@ -71,28 +60,25 @@ public class AutorController {
     }
 
     @DeleteMapping({"{id}"})
-    public ResponseEntity<Object> deletar(@PathVariable("id") String id){
-        try {
-            var idAutor = UUID.fromString(id);
-            Optional<Autor> autorOptional = service.obterPorId(idAutor);
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
 
-            if (autorOptional.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
+        var idAutor = UUID.fromString(id);
+        Optional<Autor> autorOptional = service.obterPorId(idAutor);
 
-            service.deletar(autorOptional.get());
-            return ResponseEntity.noContent().build();
-        } catch (OperacaoNaoPermitidaExceptions e){
-            var erroResposta = ErroResposta.repostaPadrao(e.getMessage());
-            return ResponseEntity.status(erroResposta.status()).body(erroResposta);
+        if (autorOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
+
+        service.deletar(autorOptional.get());
+        return ResponseEntity.noContent().build();
+
     }
 
     @GetMapping
     public ResponseEntity<List<AutorDto>> pesquisar(
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "nacionalidade", required = false) String nacionalidade
-    ){
+    ) {
         List<Autor> resultado = service.pesquisaByExample(nome, nacionalidade);
 //        List<AutorDto> lista = resultado.
 //                stream().
@@ -114,12 +100,12 @@ public class AutorController {
     @PutMapping("{id}")
     public ResponseEntity<Object> atualizar(
             @PathVariable String id,
-            @RequestBody @Valid AutorDto dto){
+            @RequestBody @Valid AutorDto dto) {
         try {
             var idAutor = UUID.fromString(id);
             Optional<Autor> autorOptional = service.obterPorId(idAutor);
 
-            if(autorOptional.isEmpty()){
+            if (autorOptional.isEmpty()) {
                 return ResponseEntity.notFound().build();
             }
 
@@ -131,7 +117,7 @@ public class AutorController {
             service.atualizar(autor);
 
             return ResponseEntity.noContent().build();
-        } catch (RegistroDuplicadoExceptions e){
+        } catch (RegistroDuplicadoExceptions e) {
             var erroDTO = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDTO.status()).body(erroDTO);
         }
