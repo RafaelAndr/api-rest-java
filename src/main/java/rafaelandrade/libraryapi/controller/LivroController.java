@@ -32,7 +32,6 @@ public class LivroController implements GenericController {
         service.salvar(livro);
         var url = gerarHeaderLocation(livro.getId());
         return ResponseEntity.created(url).build();
-
     }
 
     @GetMapping("{id}")
@@ -54,8 +53,7 @@ public class LivroController implements GenericController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Object> atualizar(
-            @PathVariable("id") String id, @RequestBody @Valid CadastroLivroDto dto){
+    public ResponseEntity<Object> atualizar(@PathVariable("id") String id, @RequestBody @Valid CadastroLivroDto dto){
         return service.obterPorId(UUID.fromString(id))
                 .map(livro -> {
                     Livro entidadeAux = mapper.toEntity(dto);

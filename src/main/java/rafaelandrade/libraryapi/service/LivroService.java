@@ -10,6 +10,7 @@ import rafaelandrade.libraryapi.model.Genero;
 import rafaelandrade.libraryapi.model.Livro;
 import rafaelandrade.libraryapi.repository.LivroRepository;
 import rafaelandrade.libraryapi.repository.specs.LivroSpecs;
+import rafaelandrade.libraryapi.validator.LivroValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +22,10 @@ import static rafaelandrade.libraryapi.repository.specs.LivroSpecs.*;
 @RequiredArgsConstructor
 public class LivroService {
     private final LivroRepository repository;
+    private final LivroValidator validator;
 
     public Livro salvar(Livro livro){
+        validator.validar(livro);
         return repository.save(livro);
     }
 
@@ -39,6 +42,7 @@ public class LivroService {
             throw new IllegalArgumentException("Para atualizar, é necessário que o livro já esteja salvo na base.");
         }
 
+        validator.validar(livro);
         repository.save(livro);
     }
 }

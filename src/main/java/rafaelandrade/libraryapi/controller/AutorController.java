@@ -80,14 +80,6 @@ public class AutorController implements GenericController {
             @RequestParam(value = "nacionalidade", required = false) String nacionalidade
     ) {
         List<Autor> resultado = service.pesquisaByExample(nome, nacionalidade);
-//        List<AutorDto> lista = resultado.
-//                stream().
-//                map(autor -> new AutorDto(
-//                        autor.getId(),
-//                        autor.getNome(),
-//                        autor.getDataNascimento(),
-//                        autor.getNacionalidade())
-//                ).collect(Collectors.toList());
 
         List<AutorDto> lista = resultado.
                 stream()

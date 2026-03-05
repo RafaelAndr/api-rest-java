@@ -35,7 +35,6 @@ public class Autor {
     private String nacionalidade;
 
     @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
-    //@Transient
     private List<Livro> livros;
 
     @CreatedDate
