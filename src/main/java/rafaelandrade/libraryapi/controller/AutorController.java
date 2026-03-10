@@ -47,13 +47,6 @@ public class AutorController implements GenericController {
                     AutorDto dto = mapper.toDto(autor);
                     return ResponseEntity.ok(dto);
                 }).orElseGet(() -> ResponseEntity.notFound().build());
-
-//        if (autorOptional.isPresent()){
-//            Autor autor = autorOptional.get();
-//            AutorDto dto = new AutorDto(autor.getId(), autor.getNome(), autor.getDataNascimento(), autor.getNacionalidade());
-//            return ResponseEntity.ok(dto);
-//        }
-//        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping({"{id}"})
@@ -78,8 +71,8 @@ public class AutorController implements GenericController {
     ) {
         List<Autor> resultado = service.pesquisaByExample(nome, nacionalidade);
 
-        List<AutorDto> lista = resultado.
-                stream()
+        List<AutorDto> lista = resultado
+                .stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
 
