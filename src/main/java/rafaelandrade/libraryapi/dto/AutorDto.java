@@ -1,4 +1,4 @@
-package rafaelandrade.libraryapi.controller.dto;
+package rafaelandrade.libraryapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

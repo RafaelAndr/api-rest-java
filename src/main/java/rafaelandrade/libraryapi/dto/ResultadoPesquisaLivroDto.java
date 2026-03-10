@@ -1,11 +1,9 @@
-package rafaelandrade.libraryapi.controller.dto;
+package rafaelandrade.libraryapi.dto;
 
-import rafaelandrade.libraryapi.model.Editora;
 import rafaelandrade.libraryapi.model.Genero;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record ResultadoPesquisaLivroDto (
         String isbn,

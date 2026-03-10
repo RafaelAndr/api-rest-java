@@ -1,4 +1,4 @@
-package rafaelandrade.libraryapi.controller.dto;
+package rafaelandrade.libraryapi.dto;
 
 public record ErroCampo(String campo, String erro) {
 }

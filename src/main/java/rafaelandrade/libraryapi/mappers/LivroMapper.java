@@ -1,10 +1,10 @@
-package rafaelandrade.libraryapi.controller.mappers;
+package rafaelandrade.libraryapi.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import rafaelandrade.libraryapi.controller.dto.CadastroLivroDto;
-import rafaelandrade.libraryapi.controller.dto.ResultadoPesquisaLivroDto;
+import rafaelandrade.libraryapi.dto.CadastroLivroDto;
+import rafaelandrade.libraryapi.dto.ResultadoPesquisaLivroDto;
 import rafaelandrade.libraryapi.model.Livro;
 import rafaelandrade.libraryapi.repository.AutorRepository;
 import rafaelandrade.libraryapi.repository.EditoraRepository;

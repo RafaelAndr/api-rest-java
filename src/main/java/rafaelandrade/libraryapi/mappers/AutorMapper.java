@@ -1,8 +1,8 @@
-package rafaelandrade.libraryapi.controller.mappers;
+package rafaelandrade.libraryapi.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import rafaelandrade.libraryapi.controller.dto.AutorDto;
+import rafaelandrade.libraryapi.dto.AutorDto;
 import rafaelandrade.libraryapi.model.Autor;
 
 @Mapper(componentModel = "spring")

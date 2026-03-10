@@ -1,22 +1,13 @@
 package rafaelandrade.libraryapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import rafaelandrade.libraryapi.model.Genero;
 import rafaelandrade.libraryapi.model.Livro;
 import rafaelandrade.libraryapi.repository.LivroRepository;
-import rafaelandrade.libraryapi.repository.specs.LivroSpecs;
 import rafaelandrade.libraryapi.validator.LivroValidator;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static rafaelandrade.libraryapi.repository.specs.LivroSpecs.*;
 
 @Service
 @RequiredArgsConstructor

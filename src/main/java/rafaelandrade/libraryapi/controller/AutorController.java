@@ -2,14 +2,11 @@ package rafaelandrade.libraryapi.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import rafaelandrade.libraryapi.controller.dto.AutorDto;
-import rafaelandrade.libraryapi.controller.dto.ErroResposta;
-import rafaelandrade.libraryapi.controller.mappers.AutorMapper;
-import rafaelandrade.libraryapi.exceptions.OperacaoNaoPermitidaExceptions;
+import rafaelandrade.libraryapi.dto.AutorDto;
+import rafaelandrade.libraryapi.dto.ErroResposta;
+import rafaelandrade.libraryapi.mappers.AutorMapper;
 import rafaelandrade.libraryapi.exceptions.RegistroDuplicadoExceptions;
 import rafaelandrade.libraryapi.model.Autor;
 import rafaelandrade.libraryapi.service.AutorService;

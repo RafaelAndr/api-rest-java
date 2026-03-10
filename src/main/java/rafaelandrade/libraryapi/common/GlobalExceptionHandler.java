@@ -1,14 +1,13 @@
-package rafaelandrade.libraryapi.controller.common;
+package rafaelandrade.libraryapi.common;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Repository;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import rafaelandrade.libraryapi.controller.dto.ErroCampo;
-import rafaelandrade.libraryapi.controller.dto.ErroResposta;
+import rafaelandrade.libraryapi.dto.ErroCampo;
+import rafaelandrade.libraryapi.dto.ErroResposta;
 import rafaelandrade.libraryapi.exceptions.CampoInvalidoException;
 import rafaelandrade.libraryapi.exceptions.OperacaoNaoPermitidaExceptions;
 import rafaelandrade.libraryapi.exceptions.RegistroDuplicadoExceptions;

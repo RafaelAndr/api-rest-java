@@ -3,11 +3,9 @@ package rafaelandrade.libraryapi.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
-import rafaelandrade.libraryapi.controller.dto.EditoraDto;
-import rafaelandrade.libraryapi.controller.mappers.EditoraMapper;
+import rafaelandrade.libraryapi.dto.EditoraDto;
+import rafaelandrade.libraryapi.mappers.EditoraMapper;
 import rafaelandrade.libraryapi.model.Editora;
 import rafaelandrade.libraryapi.service.EditoraService;
 
