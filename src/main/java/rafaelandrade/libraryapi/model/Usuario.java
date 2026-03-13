@@ -14,16 +14,17 @@ import java.util.UUID;
 public class Usuario {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column
+    @Column(name = "login")
     private String login;
 
-    @Column
+    @Column(name = "senha")
     private String senha;
 
-    @Column
+    @Column(name = "email")
     private String email;
 
     @Type(ListArrayType.class)
