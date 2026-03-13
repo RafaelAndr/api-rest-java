@@ -37,7 +37,7 @@ public class AutorController implements GenericController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<AutorDto> obterDetales(@PathVariable("id") String id) {
+    public ResponseEntity<AutorDto> obterDetalhes(@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
 //      Optional<Autor> autorOptional = service.obterPorId(idAutor);
 
