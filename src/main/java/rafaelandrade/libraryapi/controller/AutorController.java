@@ -3,6 +3,7 @@ package rafaelandrade.libraryapi.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rafaelandrade.libraryapi.dto.AutorDto;
 import rafaelandrade.libraryapi.dto.ErroResposta;
@@ -26,6 +27,7 @@ public class AutorController implements GenericController {
     private final AutorMapper mapper;
 
     @PostMapping
+    @PreAuthorize("hasRole('GERENTE')")
     public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDto dto) {
 //            Autor autorEntidade = autor.mapearParaAutor();
         Autor autor = mapper.toEntity(dto);
@@ -37,6 +39,7 @@ public class AutorController implements GenericController {
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<AutorDto> obterDetalhes(@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
 //      Optional<Autor> autorOptional = service.obterPorId(idAutor);
@@ -50,6 +53,7 @@ public class AutorController implements GenericController {
     }
 
     @DeleteMapping({"{id}"})
+    @PreAuthorize("hasRole('GERENTE')")
     public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
 
         var idAutor = UUID.fromString(id);
@@ -65,6 +69,7 @@ public class AutorController implements GenericController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<List<AutorDto>> pesquisar(
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "nacionalidade", required = false) String nacionalidade
@@ -80,6 +85,7 @@ public class AutorController implements GenericController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('GERENTE')")
     public ResponseEntity<Object> atualizar(
             @PathVariable String id,
             @RequestBody @Valid AutorDto dto) {

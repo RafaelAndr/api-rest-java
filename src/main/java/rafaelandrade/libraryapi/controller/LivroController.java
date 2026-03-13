@@ -3,6 +3,7 @@ package rafaelandrade.libraryapi.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rafaelandrade.libraryapi.dto.CadastroLivroDto;
 import rafaelandrade.libraryapi.dto.ResultadoPesquisaLivroDto;
@@ -15,12 +16,14 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/livros")
+//@PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")  Aplica regra pra todos os métodos
 public class LivroController implements GenericController {
 
     private final LivroService service;
     private final LivroMapper mapper;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     public ResponseEntity<Void> salvar(@RequestBody @Valid CadastroLivroDto dto) {
         Livro livro = mapper.toEntity(dto);
         service.salvar(livro);
@@ -28,6 +31,7 @@ public class LivroController implements GenericController {
         return ResponseEntity.created(url).build();
     }
 
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     @GetMapping("{id}")
     public ResponseEntity<ResultadoPesquisaLivroDto> obterDetalhes(@PathVariable("id") String id) {
         return service.obterPorId(UUID.fromString(id))
@@ -37,6 +41,7 @@ public class LivroController implements GenericController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deletar(@PathVariable("id") String id){
         return service.obterPorId(UUID.fromString(id))
@@ -46,6 +51,7 @@ public class LivroController implements GenericController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
     @PutMapping("{id}")
     public ResponseEntity<Object> atualizar(@PathVariable("id") String id, @RequestBody @Valid CadastroLivroDto dto){
         return service.obterPorId(UUID.fromString(id))
