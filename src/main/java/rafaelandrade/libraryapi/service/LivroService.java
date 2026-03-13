@@ -3,7 +3,9 @@ package rafaelandrade.libraryapi.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import rafaelandrade.libraryapi.model.Livro;
+import rafaelandrade.libraryapi.model.Usuario;
 import rafaelandrade.libraryapi.repository.LivroRepository;
+import rafaelandrade.libraryapi.security.SecurityService;
 import rafaelandrade.libraryapi.validator.LivroValidator;
 
 import java.util.Optional;
@@ -14,9 +16,12 @@ import java.util.UUID;
 public class LivroService {
     private final LivroRepository repository;
     private final LivroValidator validator;
+    private final SecurityService securityService;
 
     public Livro salvar(Livro livro){
         validator.validar(livro);
+        Usuario usuario = securityService.obterUsuarioLogado();
+        livro.setIdUsuario(usuario.getId());
         return repository.save(livro);
     }
 

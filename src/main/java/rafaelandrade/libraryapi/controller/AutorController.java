@@ -4,13 +4,17 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import rafaelandrade.libraryapi.dto.AutorDto;
 import rafaelandrade.libraryapi.dto.ErroResposta;
 import rafaelandrade.libraryapi.mappers.AutorMapper;
 import rafaelandrade.libraryapi.exceptions.RegistroDuplicadoExceptions;
 import rafaelandrade.libraryapi.model.Autor;
+import rafaelandrade.libraryapi.model.Usuario;
 import rafaelandrade.libraryapi.service.AutorService;
+import rafaelandrade.libraryapi.service.UsuarioService;
 
 import java.net.URI;
 import java.util.List;
@@ -25,12 +29,21 @@ public class AutorController implements GenericController {
 
     private final AutorService service;
     private final AutorMapper mapper;
+    private final UsuarioService usuarioService;
 
     @PostMapping
     @PreAuthorize("hasRole('GERENTE')")
-    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDto dto) {
-//            Autor autorEntidade = autor.mapearParaAutor();
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorDto dto,
+                                         Authentication authentication) {
+        UserDetails usuarioLogado = (UserDetails) authentication.getPrincipal();
+
+        Usuario usuario = usuarioService.obterPorLogin(usuarioLogado.getUsername());
+
+
+        System.out.println(authentication);
         Autor autor = mapper.toEntity(dto);
+        autor.setIdUsuario(usuario.getId());
+
         service.salvar(autor);
 
         //http://localhost:8080/autores/id
